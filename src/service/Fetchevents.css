@@ -1,0 +1,17 @@
+.container{
+    display: grid;
+    grid-template-columns: 300px 950px;
+    background-color: rgb(82, 76, 74);
+    min-height: 600px;
+}
+
+.col1{
+    background-color: rgb(82, 76, 74);
+    color:white;
+}
+
+.col2{
+    margin: 2px;
+    background-color: rgb(117, 112, 111);
+}
+   

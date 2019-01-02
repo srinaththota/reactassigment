@@ -1,0 +1,13 @@
+.Content{
+    margin-top: 16px;
+    
+}
+.Header{
+    
+    background-color: rgb(34, 165, 110);
+    min-height: 16vh;
+   
+    height: 10vmin;
+    font-size: calc(35px + 4vmin);
+
+}
