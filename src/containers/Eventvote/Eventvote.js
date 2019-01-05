@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 
-import Aux from '../../hoc/Aux';
+
 
 class EventVote extends Component{
     render(){
