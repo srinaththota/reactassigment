@@ -8,9 +8,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Layout>
-          <EventVote/>
-        </Layout>
+        <Layout/>
       </div>
     );
   }

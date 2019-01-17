@@ -7,7 +7,7 @@ class Header extends Component{
     render(){
         
             return(
-                <div className="header"><center>Bet365</center>
+                <div className="header"><center>Cloud Application</center>
                 <div className="login">
                 <Login/>
                 </div>

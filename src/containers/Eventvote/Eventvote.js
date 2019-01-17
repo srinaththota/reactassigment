@@ -6,8 +6,8 @@ class EventVote extends Component{
     render(){
         return(
             <div>
-                <div>Event</div>
-                <div>Vote</div>
+                Message from here
+               {/* {this.props.vote}*/}
             </div>
         );
     }

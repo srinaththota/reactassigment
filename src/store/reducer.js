@@ -1,7 +1,7 @@
 const initialState={
    userCreds:{ username:'',
     password:'',
-    betdetails:'unnn',
+    betdetails:'',
     arr:[]
 }
 
@@ -14,7 +14,7 @@ const reducer=(state=initialState,action)=>{
         const userDetails={
             username:action.username,
             password:action.password,
-            betdetails:'logined'
+            betdetails:''
         }
         return{
             ...state,

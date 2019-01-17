@@ -1,7 +1,8 @@
 import React , {Component} from 'react';
+import axios from 'axios';
 
 import './Eventdetails.css';
-
+import Eventvote from '../Eventvote/Eventvote';
 import {connect} from 'react-redux';
 
 class EventDetails extends Component{
@@ -10,7 +11,9 @@ state={
     teamA:'',
     teamB:'',
     draw:'',
-    loginflag:false
+    loginflag:false,
+    vote:'',
+    id:''
 }
 
     placebetonTeam=()=>{
@@ -28,7 +31,31 @@ state={
         else{
             
         console.log("something selected with username");
-        this.props.AddBetsToStore(this.state.teamA+this.props.home,
+        if(this.state.teamA !== '' && this.state.teamB === '' && this.state.draw === ''){
+        this.setState({
+            ...this.state,
+            id:this.props.id,
+            vote:"--TEAMNAME -- "+this.props.name+" "+'hometeam '+this.state.teamA
+        })
+    }
+
+    if(this.state.teamA === '' && this.state.teamB !== '' && this.state.draw === ''){
+        this.setState({
+            ...this.state,
+            id:this.props.id,
+            vote:"--TEAMNAME -- "+this.props.name+" "+'teamaway '+this.state.teamB
+        })
+    }
+
+    if(this.state.teamA === '' && this.state.teamB == '' && this.state.draw !== ''){
+        this.setState({
+            ...this.state,
+            id:this.props.id,
+            vote:"--TEAMNAME -- "+this.props.name+" "+'draw '+this.state.draw
+        })
+     
+    }
+      /*  this.props.AddBetsToStore(this.state.teamA+this.props.home,
             this.state.teamB+this.props.away,
             this.state.draw+this.props.home+this.props.away,
             this.props.user.username);
@@ -36,14 +63,37 @@ state={
                 this.state.teamA+this.props.home+
                 this.state.teamB+this.props.away+
                 this.state.draw+this.props.home+this.props.away+
-                this.props.user.username);
+                this.props.user.username);*/
 
-                document.getElementById("result").innerHTML = localStorage.getItem(this.props.user.username+this.props.home+this.props.away);
+             //   document.getElementById("result").innerHTML = localStorage.getItem(this.props.user.username+this.props.home+this.props.away);
+
+             
+             
         
     }
     }
+
+
+    storeEventHandler(vote){
+        if(vote !== ''){
+            console.log(vote+"==============");
+        const voted = {
+            uservote:this.state.vote
+        }
+        axios.post("http://localhost:8080/event",voted).then(response => {
+            
+            console.log(response.data);
+        })
+    }
+    else{
+        console.log("something wrong");
+        console.log(this,this.state.vote+"==============");
+    }
+    }
+
+
     render(){
-        let event=    <p><h2>Place bet on below event</h2></p>
+        let event=    <h2><p>Place bet on below event</p></h2>
         let footballImage = false;
         let snookerImage = false;
         let tennisImage = false;
@@ -104,7 +154,7 @@ state={
                     </td>
                     <td>
                     <center><input type="text" 
-                    onChange={event=>this.setState({teamB:event.target.value+{}})}/>
+                    onChange={event=>this.setState({teamB:event.target.value})}/>
                      vote team-b</center>
                     </td>
                                         
@@ -118,13 +168,13 @@ state={
         <div>
              <center>{this.props.country}
              {(franceflag)?
-             <img src="https://content.screencast.com/users/fg-a/folders/world-flags/media/8cfe9e61-62f1-4068-8e3d-3ce249f692ef/animated-french-flag.gif" width="68" height="50" border="0" alt="Flags"></img>:
+             <img src="https://content.screencast.com/users/fg-a/folders/world-flags/media/8cfe9e61-62f1-4068-8e3d-3ce249f692ef/animated-french-flag.gif" alt="" width="68" height="50" border="0" alt="Flags"></img>:
              null}
              {(swedenflag)?
-             <img src="https://content.screencast.com/users/fg-a/folders/world-flags/media/97284e55-e0b8-4987-a89d-ad7612e88c34/animated-sweden-flag.gif" width="68" height="50" border="0" alt="Flags"></img>:
+             <img src="https://content.screencast.com/users/fg-a/folders/world-flags/media/97284e55-e0b8-4987-a89d-ad7612e88c34/animated-sweden-flag.gif" width="68" height="50" border="0" alt="Flags" alt="" ></img>:
              null}
              {(englandflag)?
-             <img src="https://content.screencast.com/users/fg-a/folders/world-flags/media/f72ac381-bb38-4343-b2cb-e6010e23e888/greatbrE.gif" width="68" height="50" border="0" alt="Flags"></img>:
+             <img src="https://content.screencast.com/users/fg-a/folders/world-flags/media/f72ac381-bb38-4343-b2cb-e6010e23e888/greatbrE.gif" width="68" height="50" border="0" alt="Flags" alt=""></img>:
              null}
              </center>
         </div>
@@ -135,6 +185,7 @@ state={
             <div>
                <div>
                   Welcome {this.props.user.username}
+                  {/*{this.props.user.betdetails}*/}
             <center>
             {(footballImage)?<img 
             src="http://pngimg.com/uploads/football/football_PNG52797.png"
@@ -153,11 +204,13 @@ state={
         </div> 
             {event}
             <div>
-            <div id="result"></div>
-                {this.props.user.betdetails} and {this.props.user.username}
-                
+          {/*  <div id="result"></div>*/}
+               {/*{this.props.user.betdetails} and {this.props.user.username}*/}
+               {this.state.id}
+               <Eventvote vote={this.state.vote} clicked={()=>{this.storeEventHandler(this.state.vote)}}></Eventvote>
+                {this.props.user.betdetails}
             </div>
-            {this.props.sport}
+         
             </div>
         );
     }
