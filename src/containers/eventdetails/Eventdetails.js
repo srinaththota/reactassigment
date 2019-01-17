@@ -206,9 +206,9 @@ state={
             <div>
           {/*  <div id="result"></div>*/}
                {/*{this.props.user.betdetails} and {this.props.user.username}*/}
-               {this.state.id}
-               <Eventvote vote={this.state.vote} clicked={()=>{this.storeEventHandler(this.state.vote)}}></Eventvote>
-                {this.props.user.betdetails}
+               
+               <Eventvote id={this.state.id} vote={this.state.vote} clicked={()=>{this.storeEventHandler(this.state.vote)}}></Eventvote>
+                
             </div>
          
             </div>
